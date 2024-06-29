@@ -1,0 +1,16 @@
+.div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.text {
+  margin: 0;
+  font-size: 18px;
+}
+
+.logOut {
+  padding: 10px;
+  background-color: rgb(245, 153, 153);
+}

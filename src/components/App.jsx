@@ -1,7 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import AppBar from './AppBar/AppBar';
+import { useDispatch } from 'react-redux';
+import { refreshUser } from '../redux/auth/operations';
 
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
@@ -10,6 +12,10 @@ const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'));
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage'));
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
   return (
     <div>
       <AppBar />

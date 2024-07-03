@@ -4,3 +4,8 @@
   font-size: 42px;
   border-bottom: 2px solid rgb(245, 153, 153);
 }
+.link {
+  display: block;
+  margin-top: 16px;
+  text-decoration: underline;
+}

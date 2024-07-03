@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import css from './LoginPage.module.css';
+import { Toaster } from 'react-hot-toast';
 
 const LoginPage = () => {
   return (
@@ -10,6 +11,7 @@ const LoginPage = () => {
       <Link to="/register" className={css.link}>
         I do not have an account
       </Link>
+      <Toaster position="top-right" />
     </div>
   );
 };

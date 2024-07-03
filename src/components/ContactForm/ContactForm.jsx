@@ -3,10 +3,10 @@ import * as Yup from 'yup';
 import { useId } from 'react';
 import css from './ContactForm.module.css';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contacts/operations';
+import { addContact, editContact } from '../../redux/contacts/operations';
 import toast from 'react-hot-toast';
 
-const ContactForm = () => {
+const ContactForm = ({ contact, setContact }) => {
   const nameFieldId = useId();
   const phoneFieldId = useId();
   const dispatch = useDispatch();
@@ -23,18 +23,27 @@ const ContactForm = () => {
   });
   return (
     <Formik
-      initialValues={{ name: '', number: '' }}
+      initialValues={contact}
+      enableReinitialize={true}
       onSubmit={(values, actions) => {
         const { name, number } = values;
-        dispatch(
-          addContact({
-            name,
-            number,
-          })
-        )
-          .unwrap()
-          .then(() => toast.success('You have added a contact successfully!'))
-          .catch(() => toast.error('The contact has not been added'));
+        if (!contact.name) {
+          dispatch(
+            addContact({
+              name,
+              number,
+            })
+          )
+            .unwrap()
+            .then(() => toast.success('You have added a contact successfully!'))
+            .catch(() => toast.error('The contact has not been added'));
+        } else {
+          dispatch(editContact({ id: contact.id, name, number }))
+            .unwrap()
+            .then(() => toast.success('You have updated the contact!'))
+            .catch(() => toast.error('The contact has not been updated'));
+          setContact({ name: '', number: '' });
+        }
 
         actions.resetForm();
       }}
@@ -48,7 +57,7 @@ const ContactForm = () => {
         <Field name="number" id={phoneFieldId} className={css.input} />
         <ErrorMessage name="number" component="p" className={css.message} />
         <button type="submit" className={css.button}>
-          Add
+          {contact.name ? 'Save' : 'Add'}
         </button>
       </Form>
     </Formik>

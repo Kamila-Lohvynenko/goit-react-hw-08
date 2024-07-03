@@ -8,7 +8,7 @@ import {
   selectLoading,
 } from '../../redux/contacts/selectors';
 
-const ContactList = () => {
+const ContactList = ({ setContact }) => {
   const contacts = useSelector(selectContacts);
   const filteredContacts = useSelector(selectFilteredContacts);
   const error = useSelector(selectError);
@@ -20,7 +20,7 @@ const ContactList = () => {
         {filteredContacts.map(contact => {
           return (
             <li key={contact.id} className={css.item}>
-              <Contact contact={contact} />
+              <Contact contact={contact} setContact={setContact} />
             </li>
           );
         })}

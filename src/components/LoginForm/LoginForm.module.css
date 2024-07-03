@@ -50,3 +50,8 @@
 .label {
   text-align: left;
 }
+.error {
+  margin: 0;
+  font-size: 10px;
+  color: red;
+}

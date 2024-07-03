@@ -1,6 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addContact, deleteContact, fetchContacts } from './operations';
+import {
+  addContact,
+  deleteContact,
+  editContact,
+  fetchContacts,
+} from './operations';
 import { logout } from '../auth/operations';
+
+const handlePending = state => {
+  state.error = false;
+  state.loading = true;
+};
+const handleRejected = state => {
+  state.error = true;
+  state.loading = false;
+};
 
 const contactsSlice = createSlice({
   name: 'contacs',
@@ -12,42 +26,37 @@ const contactsSlice = createSlice({
 
   extraReducers: builder =>
     builder
-      .addCase(fetchContacts.pending, state => {
-        state.error = false;
-        state.loading = true;
-      })
+      .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
       })
-      .addCase(fetchContacts.rejected, state => {
-        state.error = true;
-        state.loading = false;
-      })
-      .addCase(deleteContact.pending, state => {
-        state.error = false;
-        state.loading = true;
-      })
+      .addCase(fetchContacts.rejected, handleRejected)
+      .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.loading = false;
         state.items = state.items.filter(item => item.id !== action.payload.id);
       })
-      .addCase(deleteContact.rejected, state => {
-        state.loading = false;
-        state.error = true;
-      })
-      .addCase(addContact.pending, state => {
-        state.error = false;
-        state.loading = true;
-      })
+      .addCase(deleteContact.rejected, handleRejected)
+      .addCase(addContact.pending, handlePending)
       .addCase(addContact.fulfilled, (state, action) => {
         state.loading = false;
         state.items.push(action.payload);
       })
-      .addCase(addContact.rejected, state => {
+      .addCase(addContact.rejected, handleRejected)
+      .addCase(editContact.pending, handlePending)
+      .addCase(editContact.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = true;
+        state.error = null;
+        const index = state.items.findIndex(
+          contact => contact.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+          state.loading = false;
+        }
       })
+      .addCase(editContact.rejected, handleRejected)
       .addCase(logout.fulfilled, state => {
         (state.items = []), (state.error = false), (state.loading = false);
       }),

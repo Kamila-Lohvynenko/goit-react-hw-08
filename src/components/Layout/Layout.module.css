@@ -1,0 +1,16 @@
+.container {
+  box-sizing: border-box;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+@media only screen and (min-width: 360px) {
+  .container {
+    max-width: 760px;
+  }
+}
+@media only screen and (min-width: 760px) {
+  .container {
+    max-width: 1100px;
+  }
+}

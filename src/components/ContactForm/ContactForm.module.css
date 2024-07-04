@@ -5,12 +5,13 @@
   flex-direction: column;
   gap: 8px;
 
-  width: 500px;
+  width: 300px;
   height: 300px;
 
   padding: 24px;
-  margin-left: 32px;
   margin-bottom: 8px;
+  margin-left: auto;
+  margin-right: auto;
 
   font-size: 20px;
   font-weight: 500;
@@ -18,6 +19,16 @@
   border: 1px solid rgb(197, 195, 195);
   background-color: rgb(252, 251, 251);
   border-radius: 20px;
+}
+@media only screen and (min-width: 760px) {
+  .form {
+    width: 400px;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .form {
+    width: 500px;
+  }
 }
 .input {
   width: 100%;

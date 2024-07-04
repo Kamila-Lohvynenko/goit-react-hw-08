@@ -22,12 +22,12 @@ const RegistrationForm = () => {
   const handleSubmit = (values, actions) => {
     dispatch(register(values))
       .unwrap()
+      .then(() => actions.resetForm())
       .catch(() => {
         toast.error(
           'You have not been register! Maybe email or name are already used!'
         );
       });
-    actions.resetForm();
   };
   return (
     <div>

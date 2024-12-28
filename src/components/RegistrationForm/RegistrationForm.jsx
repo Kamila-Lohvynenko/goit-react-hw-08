@@ -23,7 +23,9 @@ const RegistrationForm = () => {
     dispatch(register(values))
       .unwrap()
       .then(() => actions.resetForm())
-      .catch(() => {
+      .catch(error => {
+        console.log(error);
+
         toast.error(
           'You have not been register! Maybe email or name are already used!'
         );
